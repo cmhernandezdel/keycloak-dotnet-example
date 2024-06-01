@@ -1,5 +1,20 @@
 version: "3.9"
 services:
+  api:
+    build: 
+      context: ./api
+      dockerfile: Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://+:80
+      ASPNETCORE_Kestrel__Certificates__Default__Password: keycloak-dotnet
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/keycloak-dotnet.pfx
+    ports:
+      - "5000:80"
+    depends_on:
+      - keycloak
+    volumes:
+      - ~/.aspnet/https:/https:ro
+
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.4
     environment:
