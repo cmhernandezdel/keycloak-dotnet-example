@@ -18,7 +18,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapGet("/token", async (KeycloakHttpClient client) => {
-    await client.GetAdminToken();
+    var token = await client.GetAdminToken();
+    Console.WriteLine($"Bearer {token}");
 })
 .WithName("GetAdminToken")
 .WithOpenApi();
