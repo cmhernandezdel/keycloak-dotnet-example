@@ -15,6 +15,19 @@ services:
     volumes:
       - ~/.aspnet/https:/https:ro
 
+  frontend:
+    build:
+      context: ./frontend/keycloak-dotnet-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    volumes:
+      - type: bind
+        source: frontend/keycloak-dotnet-frontend/src/
+        target: /app/src
+
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.4
     environment:
